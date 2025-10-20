@@ -1,4 +1,3 @@
-
 /**
  * Cursor
  */
@@ -11,8 +10,6 @@ window.addEventListener('mousemove', (event) => {
     cursor.x = event.clientX / sizes.width - 0.5
     cursor.y = - (event.clientY / sizes.height - 0.5)
 })
-
-
 
 /**
  * Base
@@ -32,9 +29,7 @@ const scene = new THREE.Scene()
 // Camera
 const camera = new THREE.PerspectiveCamera(60, sizes.width / sizes.height, 1, 100)
 camera.position.set(0, 75, 50)
-
 scene.add(camera)
-
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -43,14 +38,18 @@ renderer.outputEncoding = THREE.sRGBEncoding
 renderer.toneMapping = THREE.ACESFilmicToneMapping
 document.body.appendChild(renderer.domElement)
 
-
+// HDR Environment
 const rgbeLoader = new RGBELoader()
-rgbeLoader.load('https://cdn.jsdelivr.net/gh/PazyukAleksey/treejs-cource@main/src/webgl/cat/texture.hdr', (texture) => {
-    texture.mapping = THREE.EquirectangularReflectionMapping
-    scene.environment = texture
-    scene.background = texture
-})
+rgbeLoader.load(
+    'https://cdn.jsdelivr.net/gh/PazyukAleksey/treejs-cource@main/src/webgl/cat/texture.hdr',
+    (texture) => {
+        texture.mapping = THREE.EquirectangularReflectionMapping
+        scene.environment = texture
+        scene.background = texture
+    }
+)
 
+// GLTF Model
 const gltfLoader = new GLTFLoader()
 gltfLoader.load(
     'https://cdn.jsdelivr.net/gh/PazyukAleksey/treejs-cource@main/src/webgl/cat/cat-404.glb',
@@ -68,26 +67,28 @@ gltfLoader.load(
     }
 )
 
+// Light
 const light = new THREE.DirectionalLight(0x00ff00, 1)
 light.position.set(5, 10, 5)
 scene.add(light)
 
+// Controls
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 controls.enableZoom = false
 controls.enablePan = false
 controls.enableRotate = false
 
+// Mouse tracking
 let mouseX = 0
 let mouseY = 0
-const targetX = 0
-const targetY = 0
 
 document.addEventListener('mousemove', (event) => {
-    mouseX = (event.clientX / window.innerWidth) * 10 * (- 1)
+    mouseX = (event.clientX / window.innerWidth) * 10 * (-1)
     mouseY = -(event.clientY / window.innerHeight) * 10
 })
 
+// Animation loop
 function animate() {
     requestAnimationFrame(animate)
 
@@ -100,6 +101,7 @@ function animate() {
 }
 animate()
 
+// Resize handling
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
