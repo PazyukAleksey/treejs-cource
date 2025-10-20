@@ -50,7 +50,7 @@ document.body.appendChild(renderer.domElement)
 
 
 const rgbeLoader = new RGBELoader()
-rgbeLoader.load('./webgl/cat/texture.hdr', (texture) => {
+rgbeLoader.load('https://cdn.jsdelivr.net/gh/PazyukAleksey/treejs-cource@main/src/webgl/cat/texture.hdr', (texture) => {
     texture.mapping = THREE.EquirectangularReflectionMapping
     scene.environment = texture
     scene.background = texture
@@ -58,7 +58,7 @@ rgbeLoader.load('./webgl/cat/texture.hdr', (texture) => {
 
 const gltfLoader = new GLTFLoader()
 gltfLoader.load(
-    './webgl/cat/cat-404.glb',
+    'https://cdn.jsdelivr.net/gh/PazyukAleksey/treejs-cource@main/src/webgl/cat/cat-404.glb',
     (gltf) => {
         const model = gltf.scene
         model.scale.set(0.1, 0.1, 0.1)
